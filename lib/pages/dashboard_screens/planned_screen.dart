@@ -23,7 +23,7 @@ class PlannedScreen extends StatelessWidget {
          "Zrobic aplikacje",
          "milosz",
          DateTime(2025, 1, 23),
-         "Robie wlasnie aplikacje ktora zajmuje mi w kurwe czasu o ja pisda asjdajjsdad",
+         "Robie wlasnie aplikacje",
          Prio.high),
             eachTaskWidget(
           context,
@@ -31,7 +31,7 @@ class PlannedScreen extends StatelessWidget {
          "aplikcja nie gotowa",
          "milosz",
          DateTime(2024, 8, 23),
-         "jutro pisze backend cioto",
+         "jutro pisze backend",
          Prio.medium)
         ],),
       drawer: drawer(context),

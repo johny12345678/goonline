@@ -35,8 +35,8 @@ class DashboardScreen extends StatelessWidget {
 
    List<Widget> _buildScreens() {
         return [
-           const PlannedScreen(title: "Planned",),
-               const ExecutingScreen(title: "Executing"),
+    const PlannedScreen(title: "Planned",),
+    const ExecutingScreen(title: "Executing"),
     const DoneScreen(title: "Done"),
 
    
