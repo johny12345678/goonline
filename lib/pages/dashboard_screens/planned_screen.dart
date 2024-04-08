@@ -25,7 +25,7 @@ class PlannedScreen extends StatelessWidget {
          DateTime(2025, 1, 23),
          "Robie wlasnie aplikacje",
          Prio.high),
-            eachTaskWidget(
+          eachTaskWidget(
           context,
          2,
          "aplikcja nie gotowa",

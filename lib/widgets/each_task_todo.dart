@@ -17,9 +17,11 @@ Widget eachTaskWidget(BuildContext context, int id, String taskName, String owne
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
               Text('${id}'),          
-              Icon(color: priorityLevel(prio),
+              Icon(color: priorityLevelColor(prio),
                   CupertinoIcons.chart_bar),
-              Text('days left: ${mathDaysLeft(deadline)}'),
+              Text(
+                style: TextStyle(color: daysLeftColor(mathDaysLeft(deadline))),
+                'days left: ${mathDaysLeft(deadline)}'),
             ],
             ),
           ),
@@ -85,9 +87,8 @@ const SizedBox(height: 30,),
       
     }
 
-        String nameAndOwner(String taskName, String owner) {
-
-      return '$taskName ($owner)';
+    String nameAndOwner(String taskName, String owner) {
+    return '$taskName ($owner)';
     }
 
     String mathDaysLeft(DateTime deadline) {
@@ -102,9 +103,19 @@ const SizedBox(height: 30,),
         return daysLeft.toString();
     }
 
+    //return color of dayltleft depends of task deadline
+    Color daysLeftColor(String days) {
+     int value = int.parse(days);
+     if (value < 150){
+      return AppColors.red;
+     }
+     return AppColors.green;
+     
+    }
 
 
-    Color priorityLevel(Prio prio) {
+    //return color of priorityicon depends of priority chosen
+    Color priorityLevelColor(Prio prio) {
       switch(prio) {
         case Prio.low :
         return AppColors.green;
@@ -112,5 +123,7 @@ const SizedBox(height: 30,),
         return AppColors.orange;
         case Prio.high :
         return AppColors.red;
+        default : Prio.low;
+        return AppColors.green;
       }
     }

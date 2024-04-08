@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:goonline_app/themes/paddings.dart';
+import 'package:goonline_app/themes/text_styles/text_styles.dart';
 
 class AddTaskScreen extends StatefulWidget {
   const AddTaskScreen({super.key});
@@ -18,6 +20,11 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
       
       ),
       
-      body: Text('AddTaskScreen'),);
+      body: const Padding(
+        padding: Paddings.horizontal30vertical10,
+        child: Text(
+          style: poppins25menu,
+          'AddTaskScreen'),
+      ),);
   }
 }
