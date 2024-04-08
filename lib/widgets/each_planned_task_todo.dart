@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:goonline_app/consts/priority.dart';
+import 'package:goonline_app/consts/enums.dart';
 import 'package:goonline_app/themes/boxes.dart';
 import 'package:goonline_app/themes/button_styles/button_styles.dart';
 import 'package:goonline_app/themes/colors.dart';

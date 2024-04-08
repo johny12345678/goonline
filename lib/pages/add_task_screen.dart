@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:goonline_app/consts/priority.dart';
+import 'package:goonline_app/consts/enums.dart';
 import 'package:goonline_app/themes/colors.dart';
 import 'package:goonline_app/themes/paddings.dart';
 import 'package:goonline_app/themes/text_styles/text_styles.dart';
@@ -14,10 +14,10 @@ class AddTaskScreen extends StatefulWidget {
 class _AddTaskScreenState extends State<AddTaskScreen> {
    Prio _prio = Prio.low;
    DateTime? initDate = DateTime.now();
-   TextEditingController _controllerTaskName = TextEditingController();
-   TextEditingController _controllerTaskDescription = TextEditingController();
-   TextEditingController _controllerDate = TextEditingController();
-   TextEditingController _controllerOwner = TextEditingController();
+   final TextEditingController _controllerTaskName = TextEditingController();
+   final TextEditingController _controllerTaskDescription = TextEditingController();
+   final TextEditingController _controllerDate = TextEditingController();
+   final TextEditingController _controllerOwner = TextEditingController();
 
    String taskName = '';
    String taskDescription = '';

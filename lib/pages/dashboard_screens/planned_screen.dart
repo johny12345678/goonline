@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:goonline_app/consts/priority.dart';
+import 'package:goonline_app/consts/enums.dart';
 import 'package:goonline_app/themes/colors.dart';
 import 'package:goonline_app/themes/paddings.dart';
 import 'package:goonline_app/widgets/appbar_widget.dart';
