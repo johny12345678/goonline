@@ -4,7 +4,10 @@ import 'package:goonline_app/pages/dashboard_screens/done_screen.dart';
 import 'package:goonline_app/pages/dashboard_screens/executing_screen.dart';
 import 'package:goonline_app/pages/dashboard_screens/planned_screen.dart';
 import 'package:goonline_app/pages/welcome_screen.dart';
-void main() {
+
+void main()  {
+  WidgetsFlutterBinding.ensureInitialized();
+  
   runApp(const MyApp());
 }
 

@@ -15,11 +15,12 @@ class TaskModel extends TaskEntity {
     id: data['id'],
     taskName: data['taskName'],
     taskDescription: data['taskDescription'],
-    deadline: data['deadline'], prio: data['prio'],
+    deadline: DateTime.fromMillisecondsSinceEpoch(data['deadline']), 
+    prio: data['prio'],
     owner: data['owner'],
     status: data['status']);
 
-  TaskModel toEntity() => 
+  TaskEntity toEntity() => 
   TaskModel(
     id: id, 
     taskName: taskName, 
@@ -28,4 +29,19 @@ class TaskModel extends TaskEntity {
     prio: prio, 
     owner: owner, 
     status: status);
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['id'] = id;
+    data['name'] = taskName;
+    data['phone'] = taskDescription;
+    data['city'] = deadline;
+    data['prio'] = prio;
+    data['owner'] = owner;
+    data['status'] = status;
+
+    return data;
+  }
+
 }
+

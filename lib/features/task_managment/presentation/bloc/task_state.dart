@@ -23,7 +23,7 @@ class TaskLoadingState extends TaskState {
 
 class TaskFailedState extends TaskState {
   final String errorMessage;
-  TaskFailedState(this.errorMessage);
+  const TaskFailedState(this.errorMessage);
 
   @override
   List<Object?> get props => [errorMessage];
