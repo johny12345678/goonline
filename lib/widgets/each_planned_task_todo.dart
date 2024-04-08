@@ -1,4 +1,4 @@
-   import 'package:flutter/cupertino.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:goonline_app/consts/priority.dart';
 import 'package:goonline_app/themes/boxes.dart';
@@ -6,13 +6,24 @@ import 'package:goonline_app/themes/button_styles/button_styles.dart';
 import 'package:goonline_app/themes/colors.dart';
 import 'package:goonline_app/themes/paddings.dart';
 import 'package:goonline_app/themes/text_styles/text_styles.dart';
+import 'package:goonline_app/widgets/blured_dialog.dart';
 
-Widget eachTaskWidget(BuildContext context, int id, String taskName, String owner, DateTime deadline, String description, Prio prio,) {
-       final width = MediaQuery.of(context).size.width;
+Widget eachPlannedTaskWidget(BuildContext context, int id, String taskName, String owner, DateTime deadline, String description, Prio prio,) {
+       
       return Column(        
         children: [
-          Padding(
-            padding: Paddings.horizontal20,
+          listIdPriorityDaysleft(context, id, deadline, prio),
+          listNameAndDescriptionContainter(context, taskName, owner, description),
+          listButtons(context, 'done', 'delete' ),
+        ],
+        
+      );
+      
+    }
+
+    Widget listIdPriorityDaysleft (BuildContext context, int id, DateTime deadline, Prio prio){
+      return   Padding(
+            padding: Paddings.horizontal20vertical10,
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
@@ -24,9 +35,11 @@ Widget eachTaskWidget(BuildContext context, int id, String taskName, String owne
                 'days left: ${mathDaysLeft(deadline)}'),
             ],
             ),
-          ),
-          const SizedBox(height: 10,),
-           Padding(
+          );          
+    }
+    Widget listNameAndDescriptionContainter (BuildContext context, String taskName, String owner, String description) {
+      final width = MediaQuery.of(context).size.width;
+        return Padding(
              padding: Paddings.horizontal20,
              child: Container(
               width: width,
@@ -36,56 +49,55 @@ Widget eachTaskWidget(BuildContext context, int id, String taskName, String owne
                  child: Column(
                   mainAxisAlignment: MainAxisAlignment.start,                  
                   children: [
-                    
                     Center(
                       child: Text(
                         (nameAndOwner(taskName, owner)),
                         style: listTitle,
                         ),
                     ),
-                   
-                    
                     Padding(
                       padding: Paddings.all10,
                       child: Text(
                         softWrap: true,
                         description),
-                    ),
-                    
-                  
+                    ),                
                   ],
                            ),
                ),
-
              ),
-           ),
-
-           Padding(
-             padding: Paddings.horizontal40vertical20,
+           );
+    }
+    Widget listButtons(BuildContext context, String title1, String title2){
+      return Padding(
+             padding: Paddings.horizontal30vertical5,
              child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
               ElevatedButton(
               style: finishTaskButton,
-              onPressed: () {}, 
-              child: const Text("Done")),
+              onPressed: () => _showAlertDialog(context), 
+              child:  Text(title1)),
                 ElevatedButton(
               style: deleteTaskButton,
-              onPressed: () {}, 
-              child: const Text(
+              onPressed: () => _showAlertDialog(context), 
+              child:  Text((title2),
                 style: addTaskButtonTextStyle,
-                "Delete"))
+                ))
               
              ],),
-           ),
-           
-
-const SizedBox(height: 30,),
-        ],
-        
-      );
-      
+           );
     }
+
+  void _showAlertDialog(BuildContext context,) {
+  VoidCallback func = () {};
+  BlurDialog continueDialog = BlurDialog(title: 'Continue', content: "Are u sure?", continueCallBack: func);
+  showDialog(
+    context: context,
+    builder: (BuildContext context) {
+      return continueDialog;
+    },
+  );
+}
 
     String nameAndOwner(String taskName, String owner) {
     return '$taskName ($owner)';
@@ -103,18 +115,18 @@ const SizedBox(height: 30,),
         return daysLeft.toString();
     }
 
-    //return color of dayltleft depends of task deadline
+    //return color of 'dayltleft' depends of task deadline
     Color daysLeftColor(String days) {
      int value = int.parse(days);
      if (value < 150){
       return AppColors.red;
      }
-     return AppColors.green;
+     return Colors.black;
      
     }
 
 
-    //return color of priorityicon depends of priority chosen
+    //return color of 'priority' icon depends of priority chosen
     Color priorityLevelColor(Prio prio) {
       switch(prio) {
         case Prio.low :
@@ -127,3 +139,4 @@ const SizedBox(height: 30,),
         return AppColors.green;
       }
     }
+

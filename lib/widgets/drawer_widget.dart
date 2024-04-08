@@ -3,6 +3,8 @@ import 'package:goonline_app/pages/add_task_screen.dart';
 import 'package:goonline_app/themes/paddings.dart';
 import 'package:goonline_app/themes/text_styles/text_styles.dart';
 
+// Drawer which is placed in appbar's of three main screens
+
 Widget drawer(BuildContext context) {
     return  Drawer(
       child: SingleChildScrollView(

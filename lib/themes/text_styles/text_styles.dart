@@ -13,7 +13,15 @@ const poppins25menu = TextStyle(
   fontSize: 25,
   fontFamily: 'Poppins',
 );
+
 // H2
+
+const poppins18 = TextStyle(
+
+  fontSize: 18,
+  fontFamily: 'Poppins',
+);
+
 const listTitle = TextStyle(
   color:AppColors.taskContainerTitle,
   fontSize: 18,

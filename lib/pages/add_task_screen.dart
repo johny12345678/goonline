@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:goonline_app/consts/priority.dart';
+import 'package:goonline_app/themes/colors.dart';
 import 'package:goonline_app/themes/paddings.dart';
 import 'package:goonline_app/themes/text_styles/text_styles.dart';
 
@@ -10,21 +12,143 @@ class AddTaskScreen extends StatefulWidget {
 }
 
 class _AddTaskScreenState extends State<AddTaskScreen> {
+   Prio _prio = Prio.low;
+   DateTime? initDate = DateTime.now();
+   TextEditingController _controllerTaskName = TextEditingController();
+   TextEditingController _controllerTaskDescription = TextEditingController();
+   TextEditingController _controllerDate = TextEditingController();
+   TextEditingController _controllerOwner = TextEditingController();
+
+   String taskName = '';
+   String taskDescription = '';
+   DateTime? taskDate;
+   Prio? prio; 
+   String taskOwner = '';
   @override
   Widget build(BuildContext context) {
-    return  Scaffold(
+    return Scaffold(
 
       appBar: AppBar(
+        backgroundColor: AppColors.blue,
+        title: const Text(
+          style: poppins25menu,
+          'Add new task'),
 
-            
-      
+
       ),
       
-      body: const Padding(
-        padding: Paddings.horizontal30vertical10,
-        child: Text(
-          style: poppins25menu,
-          'AddTaskScreen'),
+      body:  SingleChildScrollView(
+        child: Padding(
+          padding: Paddings.all20,
+          child: Column(children: <Widget>[
+
+                       TextField(
+              controller: _controllerOwner,
+              decoration: const InputDecoration(labelText: 'Task owner'),            
+            ),
+            const SizedBox(height: 20,),
+            TextField(
+              controller: _controllerTaskName,
+              decoration: const InputDecoration(labelText: 'TaskName'),            
+            ),
+            const SizedBox(height: 20,),
+             TextField(  
+              controller: _controllerTaskDescription,
+                      obscureText: true,  
+                      decoration: const InputDecoration(                        
+                        border: OutlineInputBorder(),  
+                        labelText: 'Task Description',  
+                       
+                      ),  
+                    ),  
+            const SizedBox(height: 20,),
+             TextField(            
+              decoration: const InputDecoration(
+                prefixIcon: Icon(Icons.calendar_today_outlined),
+                labelText: "Choose deadline",
+                filled: true,
+                enabledBorder: OutlineInputBorder(borderSide: BorderSide.none),
+                focusColor: AppColors.blue,
+              ),
+              controller: _controllerDate,
+              readOnly: true,
+              onTap: () {_selectDate();},
+            ),
+            const SizedBox(height: 20,),
+        
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+               const Text(
+                style: poppins18,
+                "Choose your task priority:")     , 
+                 RadioListTile<Prio>(
+            title: const Text('Low'),
+            value: Prio.low,
+            groupValue: _prio,
+            onChanged: (Prio? value) {
+              setState(() {
+                _prio = value!;
+              });
+            },
+          ),
+          RadioListTile<Prio>(
+            title: const Text('Medium'),
+            value: Prio.medium,
+            groupValue: _prio,
+            onChanged: (Prio? value) {
+              setState(() {
+                _prio = value!;
+              });
+            },
+          ),
+                  RadioListTile<Prio>(
+            title: const Text('High'),
+            value: Prio.high,
+            groupValue: _prio,
+            onChanged: (Prio? value) {
+              setState(() {
+                _prio = value!;
+              });
+            },
+          ),
+            ],),
+
+            const SizedBox(height: 20,),
+
+
+        
+            ElevatedButton(
+                onPressed: () {
+                  setState(() {
+                      taskName = _controllerTaskName.text;
+                      taskDescription = _controllerTaskDescription.text;
+                      taskDate = initDate;
+                      prio = _prio; 
+                      taskOwner = _controllerOwner.text;
+                  });
+                  Navigator.of(context).pop;
+                },
+                child: const Text('Add Task'),
+              ),
+          ],)
+        ),
       ),);
+  }
+
+
+
+  Future<void> _selectDate() async {
+    DateTime? pickedDate = await showDatePicker(
+      context: context, 
+      initialDate: initDate,
+      firstDate: DateTime(2024), 
+      lastDate: DateTime(2100));
+      if (pickedDate != null) {
+        setState(() {
+          initDate = pickedDate;
+          _controllerDate.text = pickedDate.toString().split(' ')[0];
+        });
+      }
   }
 }
