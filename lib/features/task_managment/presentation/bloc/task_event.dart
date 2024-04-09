@@ -14,7 +14,7 @@ class LoadTaskEvent extends TaskEvent {
 }
 
 class AddTaskEvent extends TaskEvent {
-  final TaskEntity task;
+  final TaskModel task;
   const AddTaskEvent(this.task);
 
   @override
@@ -22,7 +22,7 @@ class AddTaskEvent extends TaskEvent {
 }
 
 class EditTaskEvent extends TaskEvent {
-  final TaskEntity id;
+  final TaskModel id;
   const EditTaskEvent(this.id);
   @override
   List<Object?> get props => [id];

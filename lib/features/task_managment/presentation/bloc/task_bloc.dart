@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:goonline_app/features/task_managment/data/models/task_model.dart';
 import 'package:goonline_app/features/task_managment/domain/entity/task_entity.dart';
 import 'package:goonline_app/features/task_managment/domain/usecases/add_task_usecase.dart';
 import 'package:goonline_app/features/task_managment/domain/usecases/edit_task_usecase.dart';
@@ -26,19 +27,40 @@ class TaskBloc extends Bloc<TaskEvent, TaskState> {
 
   }
 
-  FutureOr<void> _loadTask(LoadTaskEvent event, Emitter<TaskState> emit) {
+  FutureOr<void> _loadTask(LoadTaskEvent event, Emitter<TaskState> emit) async {
+    emit(const TaskLoadingState());
+    final result = await loadTaskUsecase.call();
+    result.fold(
+      (left) => emit(TaskFailedState(left.toString())),
+
+      (tasks) => emit(TaskLoadedState(tasks)));
+  }
+
+  FutureOr<void> _addTask(AddTaskEvent event, Emitter<TaskState> emit) async {
+    emit(const TaskLoadingState());
+    final result = await addTaskUsecase.call(event.task);
+    result.fold(
+      (left) => emit(TaskFailedState(left.toString())),
+      (right) {
+        add(const LoadTaskEvent());
+      }
+      );
 
   }
 
-  FutureOr<void> _addTask(AddTaskEvent event, Emitter<TaskState> emit) {
-
+  FutureOr<void> _editTask(EditTaskEvent event, Emitter<TaskState> emit) async {
+    emit(const TaskLoadingState());
+    final result = await editTaskUsecase.call(event.id);
+    result.fold(
+      (left) => emit(TaskFailedState(left.toString())),
+      (right) => add(const LoadTaskEvent()));
   }
 
-  FutureOr<void> _editTask(EditTaskEvent event, Emitter<TaskState> emit) {
-
-  }
-
-  FutureOr<void> _removeTask(RemoveTaskEvent event, Emitter<TaskState> emit) {
-
+  FutureOr<void> _removeTask(RemoveTaskEvent event, Emitter<TaskState> emit) async {
+    emit(const TaskLoadingState());
+    final result = await removeTaskUsecase.call(event.id);
+    result.fold(
+      (left) => emit(TaskFailedState(left.toString())),
+      (right) => add(const LoadTaskEvent()));
   }
 }
