@@ -44,6 +44,7 @@ dependencies:
   equatable: ^2.0.5
   path: ^1.9.0
   either_dart: ^1.0.0
+  get_it: ^7.6.8
   
 
 
