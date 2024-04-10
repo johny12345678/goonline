@@ -1,8 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:goonline_app/pages/dashboard_screens/done_screen.dart';
-import 'package:goonline_app/pages/dashboard_screens/executing_screen.dart';
-import 'package:goonline_app/pages/dashboard_screens/planned_screen.dart';
+import 'package:goonline_app/features/task_managment/presentation/pages/dashboard_screens/done_screen.dart';
+import 'package:goonline_app/features/task_managment/presentation/pages/dashboard_screens/executing_screen.dart';
+import 'package:goonline_app/features/task_managment/presentation/pages/dashboard_screens/planned_screen.dart';
 import 'package:persistent_bottom_nav_bar/persistent_tab_view.dart';
 
 

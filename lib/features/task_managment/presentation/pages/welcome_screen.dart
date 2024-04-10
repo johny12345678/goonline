@@ -1,6 +1,6 @@
 import 'package:animated_splash_screen/animated_splash_screen.dart';
 import 'package:flutter/material.dart';
-import 'package:goonline_app/pages/dashboard_screen.dart';
+import 'package:goonline_app/features/task_managment/presentation/pages/dashboard_screen.dart';
 import 'package:lottie/lottie.dart';
 import 'package:page_transition/page_transition.dart';
 

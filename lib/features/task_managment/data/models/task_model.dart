@@ -1,4 +1,3 @@
-import 'package:goonline_app/consts/enums.dart';
 import 'package:goonline_app/features/task_managment/domain/entity/task_entity.dart';
 
 class TaskModel extends TaskEntity {

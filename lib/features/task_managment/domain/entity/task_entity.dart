@@ -1,6 +1,4 @@
 import 'package:equatable/equatable.dart';
-import 'package:goonline_app/consts/enums.dart';
-
 class TaskEntity extends Equatable {
   final int id;
   final String taskName;

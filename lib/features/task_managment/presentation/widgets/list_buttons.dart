@@ -2,7 +2,7 @@
 import 'package:goonline_app/themes/button_styles/button_styles.dart';
 import 'package:goonline_app/themes/paddings.dart';
 import 'package:goonline_app/themes/text_styles/text_styles.dart';
-import 'package:goonline_app/widgets/blured_dialog.dart';
+import 'package:goonline_app/features/task_managment/presentation/widgets/blured_dialog.dart';
 
 Widget listButtons(BuildContext context, String title1, String title2, VoidCallback button1Action, VoidCallback button2Action){
       return Padding(

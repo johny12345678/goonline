@@ -30,3 +30,14 @@ Prio intToPrio(int prioNumber) {
       return Prio.low;
   }
 }
+  
+  int dateToDatabase(DateTime date) {
+    final int formatedDate = date.millisecondsSinceEpoch;
+    return formatedDate;
+  }
+
+  DateTime dateFromDatabase(int date) {
+    final DateTime formated = DateTime.fromMillisecondsSinceEpoch(date);
+    return formated;
+  }
+

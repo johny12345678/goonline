@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:goonline_app/pages/add_task_screen.dart';
+import 'package:goonline_app/features/task_managment/presentation/pages/add_task_screen.dart';
 import 'package:goonline_app/themes/paddings.dart';
 import 'package:goonline_app/themes/text_styles/text_styles.dart';
 
@@ -41,11 +41,7 @@ Widget menuHeader(BuildContext context) {
         title: const Text('Add new task'),
         onTap: () {Navigator.of(context, rootNavigator: true).push(MaterialPageRoute(builder: (context) => const AddTaskScreen()));},
       ),
-       ListTile(
-        leading: const Icon(Icons.abc_outlined),
-        title: const Text('Edit tast'),
-        onTap: () {},
-      ),
+
        ListTile(
         leading: const Icon(Icons.abc_outlined),
         title: const Text('Statistics'),

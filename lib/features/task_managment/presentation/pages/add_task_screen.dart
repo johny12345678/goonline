@@ -1,17 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:goonline_app/consts/enums.dart';
-import 'package:goonline_app/features/task_managment/data/datasource/database.dart';
 import 'package:goonline_app/features/task_managment/data/models/task_model.dart';
-import 'package:goonline_app/features/task_managment/domain/usecases/add_task_usecase.dart';
-import 'package:goonline_app/features/task_managment/domain/usecases/edit_task_usecase.dart';
-import 'package:goonline_app/features/task_managment/domain/usecases/load_task.usecase.dart';
-import 'package:goonline_app/features/task_managment/domain/usecases/remove_task_usecase.dart';
 import 'package:goonline_app/features/task_managment/presentation/bloc/task_bloc.dart';
-import 'package:goonline_app/pages/dashboard_screens/planned_screen.dart';
 import 'package:goonline_app/themes/colors.dart';
 import 'package:goonline_app/themes/paddings.dart';
 import 'package:goonline_app/themes/text_styles/text_styles.dart';
+import 'package:goonline_app/utils/utils.dart';
 
 class AddTaskScreen extends StatefulWidget {
   final TaskModel? taskToEdit;
@@ -27,7 +22,7 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
     if (widget.taskToEdit != null) {
       _controllerTaskName.text = widget.taskToEdit!.taskName;
       _controllerTaskDescription.text = widget.taskToEdit!.taskDescription;
-      initDate = _dateFromDatabase(widget.taskToEdit!.deadline);
+      initDate = dateFromDatabase(widget.taskToEdit!.deadline);
       _controllerOwner.text = widget.taskToEdit!.owner;
     }
   }
@@ -77,7 +72,7 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
                     Navigator.of(context).pop();
                     taskName = _controllerTaskName.text;
                     taskDescription = _controllerTaskDescription.text;
-                    taskDateInMiliseconds = _dateToDatabase(initDate);
+                    taskDateInMiliseconds = dateToDatabase(initDate);
                     prio = _prio;
                     taskOwner = _controllerOwner.text;
                     status;
@@ -208,13 +203,4 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
     }
   }
 
-  int _dateToDatabase(DateTime date) {
-    final int formatedDate = date.millisecondsSinceEpoch;
-    return formatedDate;
-  }
-
-  DateTime _dateFromDatabase(int date) {
-    final DateTime formated = DateTime.fromMillisecondsSinceEpoch(date);
-    return formated;
-  }
 }

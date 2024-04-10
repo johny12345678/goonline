@@ -1,22 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:goonline_app/consts/enums.dart';
+
 import 'package:goonline_app/features/task_managment/presentation/bloc/task_bloc.dart';
+
 import 'package:goonline_app/themes/colors.dart';
 import 'package:goonline_app/themes/paddings.dart';
-import 'package:goonline_app/utils.dart';
-import 'package:goonline_app/widgets/appbar_widget.dart';
-import 'package:goonline_app/widgets/drawer_widget.dart';
-import 'package:goonline_app/widgets/each_planned_task.dart';
-import 'package:goonline_app/widgets/list_buttons.dart';
+import 'package:goonline_app/utils/utils.dart';
 
-class DoneScreen extends StatelessWidget {
+import 'package:goonline_app/features/task_managment/presentation/widgets/appbar_widget.dart';
+import 'package:goonline_app/features/task_managment/presentation/widgets/drawer_widget.dart';
+import 'package:goonline_app/features/task_managment/presentation/widgets/each_planned_task.dart';
+import 'package:goonline_app/features/task_managment/presentation/widgets/list_buttons.dart';
+
+class ExecutingScreen extends StatelessWidget {
   final String title;
 
-  const DoneScreen({
-    super.key,
-    required this.title,
-  });
+  const ExecutingScreen({super.key, required this.title});
 
   @override
   Widget build(BuildContext context) {
@@ -24,7 +23,7 @@ class DoneScreen extends StatelessWidget {
       backgroundColor: AppColors.white,
       body: Column(
         children: [
-          appbarWidget(context, title, AppColors.green),
+          appbarWidget(context, title, AppColors.orange),
           listOfTasks(context)
         ],
       ),
@@ -41,7 +40,7 @@ Widget listOfTasks(BuildContext context) {
             child: CircularProgressIndicator(),
           );
         } else if (state is TaskLoadedState) {
-          final list = state.taskList.where((element) => element.status == 3,).toList();
+          final list = state.taskList.where((element) => element.status == 2,).toList();
           return Expanded(
             
             child: ListView.builder(
@@ -67,7 +66,13 @@ Widget listOfTasks(BuildContext context) {
                           ),
                        
                     ),
-                         
+                           listButtons(context, "Move to done", "Delete", 
+                              () => context
+                              .read<TaskBloc>()
+                              .add(EditStatusEvent(list[index], 3)),
+                              () => context
+                              .read<TaskBloc>()
+                              .add(RemoveTaskEvent(list[index].id)),),
                   ],
                 );
               },
