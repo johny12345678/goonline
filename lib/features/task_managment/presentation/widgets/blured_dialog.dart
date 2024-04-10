@@ -5,11 +5,11 @@ import 'package:flutter/material.dart';
 @immutable
 class BlurDialog extends StatelessWidget {
 
-  String title;
-  String content;
-  Function continueCallBack;
+final String title;
+final String content;
+final Function continueCallBack;
 
-BlurDialog({super.key, required this.title, required this.content, required this.continueCallBack});
+const BlurDialog({super.key, required this.title, required this.content, required this.continueCallBack});
 
    
 

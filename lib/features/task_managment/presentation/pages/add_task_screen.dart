@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:goonline_app/consts/enums.dart';
 import 'package:goonline_app/features/task_managment/data/models/task_model.dart';
@@ -16,6 +15,7 @@ class AddTaskScreen extends StatefulWidget {
   @override
   State<AddTaskScreen> createState() => _AddTaskScreenState();
 }
+
 class _AddTaskScreenState extends State<AddTaskScreen> {
   @override
   void initState() {
@@ -75,37 +75,34 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
     );
   }
 
-
   Widget elevatedButtonAndLogic(BuildContext context) {
-    return   ElevatedButton(
-                  onPressed: () {
-                    Navigator.of(context).pop();
-                    taskName = _controllerTaskName.text;
-                    taskDescription = _controllerTaskDescription.text;
-                    taskDateInMiliseconds = dateToDatabase(initDate);
-                    prio = _prio;
-                    taskOwner = _controllerOwner.text;
-                    status;
-                    if (widget.taskToEdit != null){
-                        id = widget.taskToEdit!.id;
-                    }
-                    final newTask = TaskModel(id,
-                        taskName: taskName,
-                        taskDescription: taskDescription,
-                        deadline: taskDateInMiliseconds!,
-                        prio: prioInt,
-                        owner: taskOwner,
-                        status: status);
-                    widget.taskToEdit == null
-                        ? BlocProvider.of<TaskBloc>(context)
-                            .add(AddTaskEvent(newTask))
-                        : BlocProvider.of<TaskBloc>(context)
-                            .add(EditTaskEvent(newTask));
-                  },
-                  child: widget.taskToEdit == null
-                      ? const Text('Add task')
-                      : const Text('Update task'),
-                );
+    return ElevatedButton(
+      onPressed: () {
+        Navigator.of(context).pop();
+        taskName = _controllerTaskName.text;
+        taskDescription = _controllerTaskDescription.text;
+        taskDateInMiliseconds = dateToDatabase(initDate);
+        prio = _prio;
+        taskOwner = _controllerOwner.text;
+        status;
+        if (widget.taskToEdit != null) {
+          id = widget.taskToEdit!.id;
+        }
+        final newTask = TaskModel(id,
+            taskName: taskName,
+            taskDescription: taskDescription,
+            deadline: taskDateInMiliseconds!,
+            prio: prioInt,
+            owner: taskOwner,
+            status: status);
+        widget.taskToEdit == null
+            ? BlocProvider.of<TaskBloc>(context).add(AddTaskEvent(newTask))
+            : BlocProvider.of<TaskBloc>(context).add(EditTaskEvent(newTask));
+      },
+      child: widget.taskToEdit == null
+          ? const Text('Add task')
+          : const Text('Update task'),
+    );
   }
 
   Widget taskNameDescriptionOwnerChoose(BuildContext context) {
@@ -193,6 +190,7 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
       ],
     );
   }
+
   //Dialog with date
   Future<void> _selectDate() async {
     DateTime? pickedDate = await showDatePicker(
@@ -207,5 +205,4 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
       });
     }
   }
-
 }
