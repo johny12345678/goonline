@@ -18,49 +18,64 @@ class TaskBloc extends Bloc<TaskEvent, TaskState> {
   final LoadTaskUsecase loadTaskUsecase;
   final RemoveTaskUsecase removeTaskUsecase;
 
-  TaskBloc(this.addTaskUsecase, this.editTaskUsecase, this.loadTaskUsecase, this.removeTaskUsecase,)  : super(const TaskState()) {
-
+  TaskBloc(
+    this.addTaskUsecase,
+    this.editTaskUsecase,
+    this.loadTaskUsecase,
+    this.removeTaskUsecase,
+  ) : super(const TaskInitState()) {
     on<LoadTaskEvent>(_loadTask);
     on<AddTaskEvent>(_addTask);
-    on<EditTaskEvent>(_editTask);
+    on<EditStatusEvent>(_editStatusTask);
     on<RemoveTaskEvent>(_removeTask);
-
+    on<EditTaskEvent>(_editTask);
   }
 
   FutureOr<void> _loadTask(LoadTaskEvent event, Emitter<TaskState> emit) async {
     emit(const TaskLoadingState());
     final result = await loadTaskUsecase.call();
-    result.fold(
-      (left) => emit(TaskFailedState(left.toString())),
-
-      (tasks) => emit(TaskLoadedState(tasks)));
+    result.fold((left) => emit(TaskFailedState(left.toString())),
+        (tasks) => emit(TaskLoadedState(tasks)));
   }
 
   FutureOr<void> _addTask(AddTaskEvent event, Emitter<TaskState> emit) async {
     emit(const TaskLoadingState());
     final result = await addTaskUsecase.call(event.task);
-    result.fold(
-      (left) => emit(TaskFailedState(left.toString())),
-      (right) {
-        add(const LoadTaskEvent());
-      }
-      );
+    result.fold((left) => emit(TaskFailedState(left.toString())), (right) {
+      add(const LoadTaskEvent());
+    });
+  }
 
+  FutureOr<void> _editStatusTask(
+      EditStatusEvent event, Emitter<TaskState> emit) async {
+    emit(const TaskLoadingState());
+    TaskModel updated = event.task.copyWith(status: event.status);
+    final result = await editTaskUsecase.call(updated);
+    result.fold((left) => emit(TaskFailedState(left.toString())), (right) {
+      add(const LoadTaskEvent());
+    });
+  }
+
+  FutureOr<void> _removeTask(
+      RemoveTaskEvent event, Emitter<TaskState> emit) async {
+    emit(const TaskLoadingState());
+    final result = await removeTaskUsecase.call(event.id);
+    result.fold((left) => emit(TaskFailedState(left.toString())),
+        (right) => add(const LoadTaskEvent()));
   }
 
   FutureOr<void> _editTask(EditTaskEvent event, Emitter<TaskState> emit) async {
     emit(const TaskLoadingState());
-    final result = await editTaskUsecase.call(event.id);
-    result.fold(
-      (left) => emit(TaskFailedState(left.toString())),
-      (right) => add(const LoadTaskEvent()));
-  }
 
-  FutureOr<void> _removeTask(RemoveTaskEvent event, Emitter<TaskState> emit) async {
-    emit(const TaskLoadingState());
-    final result = await removeTaskUsecase.call(event.id);
-    result.fold(
-      (left) => emit(TaskFailedState(left.toString())),
-      (right) => add(const LoadTaskEvent()));
+    TaskModel updated = event.task.copyWith(
+        taskName: event.task.taskName,
+        taskDescription: event.task.taskDescription,
+        deadline: event.task.deadline,
+        prio: event.task.prio,
+        owner: event.task.owner);
+    final result = await editTaskUsecase.call(updated);
+    result.fold((left) => emit(TaskFailedState(left.toString())), (right) {
+      add(const LoadTaskEvent());
+    });
   }
 }

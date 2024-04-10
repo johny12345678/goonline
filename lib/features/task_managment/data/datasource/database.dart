@@ -3,7 +3,7 @@ import 'package:sqflite/sqflite.dart';
 
 class DBhelper {
   static Database? _database;
-  static const String TABLE_TASKS = 'tasks';
+  static const String tableName = 'tasks';
 
   Future<Database> get db async {
     if (_database != null) {
@@ -22,7 +22,7 @@ class DBhelper {
       onCreate: (db, version) {
         //create table
         return db.execute(
-          'CREATE TABLE $TABLE_TASKS '
+          'CREATE TABLE $tableName'
           '(id INTEGER PRIMARY KEY AUTOINCREMENT,'
           'taskName TEXT,'
           'taskDescription TEXT,'
@@ -35,6 +35,19 @@ class DBhelper {
       },
       version: 1,
     );
+  }
+
+  Future <void> printTasks() async {
+    final path = await getDatabasesPath();
+    final database = join(path, 'my_databasse.db');
+
+    
+    final db = await openDatabase(database);
+    final List<Map<String, dynamic>> tasks = await db.query(tableName);
+    for (var task in tasks){
+      print(task);
+    }
+
   }
 
   Future close() async {

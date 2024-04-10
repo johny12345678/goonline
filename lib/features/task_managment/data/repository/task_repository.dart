@@ -10,6 +10,7 @@ abstract class TaskRepository {
   Future <Either<Exception, void>> removeTask(int id);
 }
 
+
 class TaskRepositoryImpl implements TaskRepository {
   final TaskDatasource taskDatasource;
   TaskRepositoryImpl(this.taskDatasource);

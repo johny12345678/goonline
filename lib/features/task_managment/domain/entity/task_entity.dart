@@ -5,8 +5,8 @@ class TaskEntity extends Equatable {
   final int id;
   final String taskName;
   final String taskDescription;
-  final DateTime deadline;
-  final Prio prio;
+  final int deadline;
+  final int prio;
   final String owner;
   final int status;
 

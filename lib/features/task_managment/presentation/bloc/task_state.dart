@@ -7,9 +7,16 @@ class TaskState extends Equatable {
   List<Object?> get props => [];
 }
 
+class TaskInitState extends TaskState {
+  const TaskInitState();
+
+    @override
+  List<Object?> get props => [];
+}
+
 class TaskLoadedState extends TaskState {
-  final List<TaskEntity> taskList;
-  const TaskLoadedState(this.taskList);
+  final List<TaskModel> taskList;
+  const TaskLoadedState(this.taskList,);
 
   @override
   List<Object?> get props => [];
@@ -29,9 +36,9 @@ class TaskFailedState extends TaskState {
   List<Object?> get props => [errorMessage];
 }
 
-class TaskAddSuccessState extends TaskState {
-  final TaskEntity task;
-  const TaskAddSuccessState(this.task);
+class TaskEditedState extends TaskState {
+  final TaskModel task;
+  const TaskEditedState(this.task);
   @override
   List<Object?> get props => [task];
 }

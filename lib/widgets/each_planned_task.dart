@@ -8,13 +8,13 @@ import 'package:goonline_app/themes/paddings.dart';
 import 'package:goonline_app/themes/text_styles/text_styles.dart';
 import 'package:goonline_app/widgets/blured_dialog.dart';
 
-Widget eachPlannedTaskWidget(BuildContext context, int id, String taskName, String owner, DateTime deadline, String description, Prio prio,) {
+Widget eachPlannedTaskWidget(BuildContext context, int id, String taskName, String owner, DateTime deadline, String description, Prio prio) {
        
       return Column(        
         children: [
           listIdPriorityDaysleft(context, id, deadline, prio),
           listNameAndDescriptionContainter(context, taskName, owner, description),
-          listButtons(context, 'done', 'delete' ),
+          
         ],
         
       );
@@ -67,37 +67,9 @@ Widget eachPlannedTaskWidget(BuildContext context, int id, String taskName, Stri
              ),
            );
     }
-    Widget listButtons(BuildContext context, String title1, String title2){
-      return Padding(
-             padding: Paddings.horizontal30vertical5,
-             child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-              ElevatedButton(
-              style: finishTaskButton,
-              onPressed: () => _showAlertDialog(context), 
-              child:  Text(title1)),
-                ElevatedButton(
-              style: deleteTaskButton,
-              onPressed: () => _showAlertDialog(context), 
-              child:  Text((title2),
-                style: addTaskButtonTextStyle,
-                ))
-              
-             ],),
-           );
-    }
 
-  void _showAlertDialog(BuildContext context,) {
-  VoidCallback func = () {};
-  BlurDialog continueDialog = BlurDialog(title: 'Continue', content: "Are u sure?", continueCallBack: func);
-  showDialog(
-    context: context,
-    builder: (BuildContext context) {
-      return continueDialog;
-    },
-  );
-}
+
+
 
     String nameAndOwner(String taskName, String owner) {
     return '$taskName ($owner)';
@@ -118,7 +90,7 @@ Widget eachPlannedTaskWidget(BuildContext context, int id, String taskName, Stri
     //return color of 'dayltleft' depends of task deadline
     Color daysLeftColor(String days) {
      int value = int.parse(days);
-     if (value < 150){
+     if (value < 3){
       return AppColors.red;
      }
      return Colors.black;

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:goonline_app/pages/task_screen.dart';
+import 'package:goonline_app/pages/add_task_screen.dart';
 import 'package:goonline_app/themes/paddings.dart';
 import 'package:goonline_app/themes/text_styles/text_styles.dart';
 

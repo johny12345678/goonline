@@ -1,43 +1,55 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:goonline_app/consts/enums.dart';
+import 'package:goonline_app/features/task_managment/data/datasource/database.dart';
 import 'package:goonline_app/features/task_managment/data/models/task_model.dart';
 import 'package:goonline_app/features/task_managment/domain/usecases/add_task_usecase.dart';
 import 'package:goonline_app/features/task_managment/domain/usecases/edit_task_usecase.dart';
 import 'package:goonline_app/features/task_managment/domain/usecases/load_task.usecase.dart';
 import 'package:goonline_app/features/task_managment/domain/usecases/remove_task_usecase.dart';
 import 'package:goonline_app/features/task_managment/presentation/bloc/task_bloc.dart';
+import 'package:goonline_app/pages/dashboard_screens/planned_screen.dart';
 import 'package:goonline_app/themes/colors.dart';
 import 'package:goonline_app/themes/paddings.dart';
 import 'package:goonline_app/themes/text_styles/text_styles.dart';
 
-
-
 class AddTaskScreen extends StatefulWidget {
-   const AddTaskScreen({super.key});
+  final TaskModel? taskToEdit;
+  const AddTaskScreen({super.key, this.taskToEdit});
 
   @override
   State<AddTaskScreen> createState() => _AddTaskScreenState();
 }
-
 class _AddTaskScreenState extends State<AddTaskScreen> {
+  @override
+  void initState() {
+    super.initState();
+    if (widget.taskToEdit != null) {
+      _controllerTaskName.text = widget.taskToEdit!.taskName;
+      _controllerTaskDescription.text = widget.taskToEdit!.taskDescription;
+      initDate = _dateFromDatabase(widget.taskToEdit!.deadline);
+      _controllerOwner.text = widget.taskToEdit!.owner;
+    }
+  }
+
   Prio _prio = Prio.low;
-  DateTime? initDate = DateTime.now();
+  DateTime initDate = DateTime.now();
   final TextEditingController _controllerTaskName = TextEditingController();
   final TextEditingController _controllerTaskDescription =
       TextEditingController();
   final TextEditingController _controllerDate = TextEditingController();
   final TextEditingController _controllerOwner = TextEditingController();
   final status = 1;
-
+  int id = 0;
   String taskName = '';
   String taskDescription = '';
-  DateTime? taskDate;
+  int? taskDateInMiliseconds;
   Prio? prio;
+  int prioInt = 1;
+
   String taskOwner = '';
   @override
   Widget build(BuildContext context) {
-    
     return Scaffold(
       appBar: AppBar(
         backgroundColor: AppColors.blue,
@@ -62,26 +74,32 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
                 ),
                 ElevatedButton(
                   onPressed: () {
-                    
-                      
-                      taskName = _controllerTaskName.text;
-                      taskDescription = _controllerTaskDescription.text;
-                      taskDate = initDate;
-                      prio = _prio;
-                      taskOwner = _controllerOwner.text;
-                      status;
-                      final newTask = TaskModel(
-                        0,
-                        taskName: taskName, 
-                        taskDescription: taskDescription, 
-                        deadline: taskDate!, 
-                        prio: prio!, 
-                        owner: taskOwner, 
+                    Navigator.of(context).pop();
+                    taskName = _controllerTaskName.text;
+                    taskDescription = _controllerTaskDescription.text;
+                    taskDateInMiliseconds = _dateToDatabase(initDate);
+                    prio = _prio;
+                    taskOwner = _controllerOwner.text;
+                    status;
+                    if (widget.taskToEdit != null){
+                        id = widget.taskToEdit!.id;
+                    }
+                    final newTask = TaskModel(id,
+                        taskName: taskName,
+                        taskDescription: taskDescription,
+                        deadline: taskDateInMiliseconds!,
+                        prio: prioInt,
+                        owner: taskOwner,
                         status: status);
-                    BlocProvider.of<TaskBloc>(context).add(AddTaskEvent(newTask));
-                    Navigator.of(context).pop;
+                    widget.taskToEdit == null
+                        ? BlocProvider.of<TaskBloc>(context)
+                            .add(AddTaskEvent(newTask))
+                        : BlocProvider.of<TaskBloc>(context)
+                            .add(EditTaskEvent(newTask));
                   },
-                  child: const Text('Add Task'),
+                  child: widget.taskToEdit == null
+                      ? const Text('Add task')
+                      : const Text('Update task'),
                 ),
               ],
             )),
@@ -108,7 +126,6 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
         ),
         TextField(
           controller: _controllerTaskDescription,
-          obscureText: true,
           decoration: const InputDecoration(
             border: OutlineInputBorder(),
             labelText: 'Task Description',
@@ -156,6 +173,7 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
           groupValue: _prio,
           onChanged: (Prio? value) {
             setState(() {
+              prioInt = 2;
               _prio = value!;
             });
           },
@@ -166,6 +184,7 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
           groupValue: _prio,
           onChanged: (Prio? value) {
             setState(() {
+              prioInt = 3;
               _prio = value!;
             });
           },
@@ -188,8 +207,14 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
       });
     }
   }
+
+  int _dateToDatabase(DateTime date) {
+    final int formatedDate = date.millisecondsSinceEpoch;
+    return formatedDate;
+  }
+
+  DateTime _dateFromDatabase(int date) {
+    final DateTime formated = DateTime.fromMillisecondsSinceEpoch(date);
+    return formated;
+  }
 }
-
-
-
-

@@ -8,7 +8,7 @@ import 'package:goonline_app/features/task_managment/domain/usecases/edit_task_u
 import 'package:goonline_app/features/task_managment/domain/usecases/load_task.usecase.dart';
 import 'package:goonline_app/features/task_managment/domain/usecases/remove_task_usecase.dart';
 import 'package:goonline_app/features/task_managment/presentation/bloc/task_bloc.dart';
-import 'package:goonline_app/pages/task_screen.dart';
+import 'package:goonline_app/pages/add_task_screen.dart';
 import 'package:goonline_app/pages/dashboard_screens/done_screen.dart';
 import 'package:goonline_app/pages/dashboard_screens/executing_screen.dart';
 import 'package:goonline_app/pages/dashboard_screens/planned_screen.dart';
@@ -16,13 +16,19 @@ import 'package:goonline_app/pages/welcome_screen.dart';
 
 GetIt locator = GetIt.instance;
 
-void setup() {
+void setupLocators() {
   final TaskDatasource datasource = TaskDatasourceImpl();
   locator.registerSingleton<TaskRepository>(TaskRepositoryImpl(datasource));
+  locator.registerSingleton<AddTaskUsecase>(AddTaskUsecase(taskRepository: locator()));
+  locator.registerSingleton<EditTaskUsecase>(EditTaskUsecase(taskRepository: locator()));
+  locator.registerSingleton<LoadTaskUsecase>(LoadTaskUsecase(taskRepository: locator()));
+  locator.registerSingleton<RemoveTaskUsecase>(RemoveTaskUsecase(taskRepository: locator()));
   
 }
 void main()  {
+
   WidgetsFlutterBinding.ensureInitialized();
+  setupLocators();
   locator.registerSingleton<TaskBloc>;
   runApp(BlocProvider(
       create: (_) => TaskBloc(
