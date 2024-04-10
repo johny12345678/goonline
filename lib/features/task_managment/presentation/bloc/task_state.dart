@@ -36,16 +36,3 @@ class TaskFailedState extends TaskState {
   List<Object?> get props => [errorMessage];
 }
 
-class TaskEditedState extends TaskState {
-  final TaskModel task;
-  const TaskEditedState(this.task);
-  @override
-  List<Object?> get props => [task];
-}
-
-class TaskRemoveSuccessState extends TaskState {
-  final TaskEntity task;
-  const TaskRemoveSuccessState(this.task);
-  @override
-  List<Object?> get props => [task];
-}

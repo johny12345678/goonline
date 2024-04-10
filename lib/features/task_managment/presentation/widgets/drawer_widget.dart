@@ -35,7 +35,7 @@ Widget menuHeader(BuildContext context) {
 }
 
   Widget menuItems(BuildContext context) {
-    return Column(children: [
+    return Column(children: [ 
       ListTile(
         leading: const Icon(Icons.abc_outlined),
         title: const Text('Add new task'),
@@ -43,11 +43,11 @@ Widget menuHeader(BuildContext context) {
           Navigator.of(context, rootNavigator: true).push(MaterialPageRoute(builder: (context) => const AddTaskScreen()));},
       ),
 
-       ListTile(
-        leading: const Icon(Icons.abc_outlined),
-        title: const Text('Statistics'),
-        onTap: () {},
-      ),
+      //  ListTile(
+      //   leading: const Icon(Icons.abc_outlined),
+      //   title: const Text('Statistics'),
+      //   onTap: () {},
+      // ),
     ],);
 }
 
