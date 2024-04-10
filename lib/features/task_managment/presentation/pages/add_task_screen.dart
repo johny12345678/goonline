@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:goonline_app/consts/enums.dart';
 import 'package:goonline_app/features/task_managment/data/models/task_model.dart';
@@ -67,7 +68,16 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
                 const SizedBox(
                   height: 20,
                 ),
-                ElevatedButton(
+                elevatedButtonAndLogic(context)
+              ],
+            )),
+      ),
+    );
+  }
+
+
+  Widget elevatedButtonAndLogic(BuildContext context) {
+    return   ElevatedButton(
                   onPressed: () {
                     Navigator.of(context).pop();
                     taskName = _controllerTaskName.text;
@@ -95,11 +105,7 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
                   child: widget.taskToEdit == null
                       ? const Text('Add task')
                       : const Text('Update task'),
-                ),
-              ],
-            )),
-      ),
-    );
+                );
   }
 
   Widget taskNameDescriptionOwnerChoose(BuildContext context) {
@@ -187,7 +193,6 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
       ],
     );
   }
-
   //Dialog with date
   Future<void> _selectDate() async {
     DateTime? pickedDate = await showDatePicker(

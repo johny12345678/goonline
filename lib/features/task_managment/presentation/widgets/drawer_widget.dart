@@ -39,7 +39,8 @@ Widget menuHeader(BuildContext context) {
       ListTile(
         leading: const Icon(Icons.abc_outlined),
         title: const Text('Add new task'),
-        onTap: () {Navigator.of(context, rootNavigator: true).push(MaterialPageRoute(builder: (context) => const AddTaskScreen()));},
+        onTap: () {          
+          Navigator.of(context, rootNavigator: true).push(MaterialPageRoute(builder: (context) => const AddTaskScreen()));},
       ),
 
        ListTile(
