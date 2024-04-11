@@ -20,7 +20,7 @@ class ExecutingScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppColors.white,
+      
       body: Column(
         children: [
           appbarWidget(context, title, AppColors.orange),

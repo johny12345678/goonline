@@ -16,8 +16,8 @@ class PlannedScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: AppColors.white,
+    return Scaffold(  
+      
       body: Column(
         children: [
           appbarWidget(context, title, AppColors.blue),

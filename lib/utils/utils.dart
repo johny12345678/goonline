@@ -41,3 +41,5 @@ Prio intToPrio(int prioNumber) {
     return formated;
   }
 
+   const apiKeyWeather = "64f750e5e5710f682ce22c22d9993562";
+
