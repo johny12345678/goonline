@@ -42,3 +42,12 @@ class EditTaskEvent extends TaskEvent {
   @override
   List<Object?> get props => [task];
 }
+
+class SortTaskEvent extends TaskEvent {
+  final bool lowToHgh;
+  final String sortBy;
+  final List<TaskModel> listToSort;
+  const SortTaskEvent(this. sortBy, this.listToSort, this.lowToHgh);
+  @override
+  List<Object?> get props => [sortBy, listToSort, lowToHgh];
+}

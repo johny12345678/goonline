@@ -1,7 +1,7 @@
 import 'package:goonline_app/consts/enums.dart';
 
 DateTime intToDate(int dateFromDatabase) {
-  final date = DateTime.fromMillisecondsSinceEpoch(dateFromDatabase);
+  final date = DateTime.fromMillisecondsSinceEpoch(dateFromDatabase + 86400000);
   return date;
 }
 

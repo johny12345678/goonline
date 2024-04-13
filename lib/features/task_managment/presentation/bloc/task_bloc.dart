@@ -3,7 +3,6 @@ import 'dart:async';
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:goonline_app/features/task_managment/data/models/task_model.dart';
-import 'package:goonline_app/features/task_managment/domain/entity/task_entity.dart';
 import 'package:goonline_app/features/task_managment/domain/usecases/add_task_usecase.dart';
 import 'package:goonline_app/features/task_managment/domain/usecases/edit_task_usecase.dart';
 import 'package:goonline_app/features/task_managment/domain/usecases/load_task.usecase.dart';
@@ -29,6 +28,7 @@ class TaskBloc extends Bloc<TaskEvent, TaskState> {
     on<EditStatusEvent>(_editStatusTask);
     on<RemoveTaskEvent>(_removeTask);
     on<EditTaskEvent>(_editTask);
+    on<SortTaskEvent>(_sortBy);
   }
 
   FutureOr<void> _loadTask(LoadTaskEvent event, Emitter<TaskState> emit) async {
@@ -78,4 +78,33 @@ class TaskBloc extends Bloc<TaskEvent, TaskState> {
       add(const LoadTaskEvent());
     });
   }
+
+  FutureOr<void> _sortBy(SortTaskEvent event, Emitter<TaskState> emit) {
+
+          emit(const TaskLoadingState());
+      
+
+       List<TaskModel> sorted = event.listToSort;
+
+        switch(event.sortBy){
+        case 'deadline' : 
+        sorted.sort((a, b) => a.deadline.compareTo(b.deadline)); 
+        break;
+        case 'owner' :
+        sorted.sort(((a, b) => a.owner.compareTo(b.owner)));
+        break;
+        case 'prio' :
+        sorted.sort((a, b) => a.prio.compareTo(b.prio));
+        break;
+        default : break;
+      }
+      if(!event.lowToHgh){
+        sorted = sorted.reversed.toList();
+      }
+     
+      
+      emit(TaskLoadedState(sorted));
+    }
+
+  
 }

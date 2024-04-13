@@ -8,7 +8,7 @@ import 'package:goonline_app/themes/paddings.dart';
 import 'package:goonline_app/utils/utils.dart';
 
 import 'package:goonline_app/features/task_managment/presentation/widgets/appbar_widget.dart';
-import 'package:goonline_app/features/task_managment/presentation/widgets/drawer_widget.dart';
+import 'package:goonline_app/features/shared/widgets/drawer_widget.dart';
 import 'package:goonline_app/features/task_managment/presentation/widgets/each_planned_task.dart';
 import 'package:goonline_app/features/task_managment/presentation/widgets/list_buttons.dart';
 

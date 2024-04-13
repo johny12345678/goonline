@@ -23,7 +23,7 @@ class WelcomeSplashScreen extends StatelessWidget {
         
         ],
         ),
-        splashIconSize: 400          ,
+        splashIconSize: 500          ,
         backgroundColor: Colors.white,
         splashTransition: SplashTransition.fadeTransition,
         pageTransitionType: PageTransitionType.leftToRight,

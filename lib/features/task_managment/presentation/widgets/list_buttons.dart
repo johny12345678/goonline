@@ -6,7 +6,7 @@ import 'package:goonline_app/features/task_managment/presentation/widgets/blured
 
 Widget listButtons(BuildContext context, String title1, String title2, VoidCallback button1Action, VoidCallback button2Action){
       return Padding(
-             padding: Paddings.horizontal30vertical5,
+             padding: Paddings.horizontal30,
              child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [

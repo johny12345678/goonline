@@ -21,7 +21,11 @@ const poppins18 = TextStyle(
   fontSize: 18,
   fontFamily: 'Poppins',
 );
+const poppins18bold = TextStyle(
 
+  fontSize: 18,
+  fontFamily: 'Poppins',
+);
 const listTitle = TextStyle(
   color:AppColors.taskContainerTitle,
   fontSize: 18,

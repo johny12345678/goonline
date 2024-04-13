@@ -19,6 +19,7 @@ class Paddings {
 
 
   static const horizontal10 = EdgeInsets.symmetric(horizontal: 10);
+    static const horizontal15 = EdgeInsets.symmetric(horizontal: 15);
 
   static const horizontal20vertical5 =  EdgeInsets.symmetric(horizontal: 20, vertical: 5);
   static const horizontal40vertical20 =  EdgeInsets.symmetric(horizontal: 40, vertical: 20);
