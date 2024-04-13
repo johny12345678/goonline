@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:goonline_app/dependency_injector/injector.dart';
+import 'package:goonline_app/features/notifications/data/datasource.dart';
 import 'package:goonline_app/features/task_managment/domain/usecases/add_task_usecase.dart';
 import 'package:goonline_app/features/task_managment/domain/usecases/edit_task_usecase.dart';
 import 'package:goonline_app/features/task_managment/domain/usecases/load_task.usecase.dart';
@@ -19,6 +20,7 @@ import 'package:goonline_app/geolocalization/geolocalization_device_access.dart'
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   setupLocators();
+  NotificationDatasource.notificationInit();
   Position position = await determinePosition();
 
   runApp(MultiBlocProvider(providers: [

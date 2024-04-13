@@ -68,7 +68,7 @@ Widget menuItems(BuildContext context) {
                             
                              onTap: () {
                               
-                              NotificationDatasource().showNotification( title: 'title', body: 'body');},
+                              NotificationDatasource.pushNotification( title: 'notification title', body: 'description');},
                            
                                        ),
                     ),
