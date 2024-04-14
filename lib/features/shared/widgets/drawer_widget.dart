@@ -2,10 +2,11 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:goonline_app/features/notifications/data/datasource.dart';
+import 'package:goonline_app/features/notifications/service/notification_service.dart';
 import 'package:goonline_app/features/presentation/notification_page.dart';
 import 'package:goonline_app/features/task_managment/presentation/pages/add_task_screen.dart';
 import 'package:goonline_app/features/weather_display/presentation/weather_bloc.dart';
+import 'package:goonline_app/pages/statistics.dart';
 import 'package:goonline_app/themes/colors.dart';
 import 'package:goonline_app/themes/paddings.dart';
 import 'package:goonline_app/themes/text_styles/text_styles.dart';
@@ -55,7 +56,7 @@ Widget menuItems(BuildContext context) {
        ListTile(
         leading: const Icon(CupertinoIcons.graph_circle),
         title: const Text('Statistics'),
-        onTap: () {},
+        onTap: () {Navigator.of(context, rootNavigator: true).push(MaterialPageRoute(builder: (context) => TaskStatisticsScreen()));},
       ),
              Row(
              
@@ -68,7 +69,7 @@ Widget menuItems(BuildContext context) {
                             
                              onTap: () {
                               
-                              NotificationDatasource.pushNotification( title: 'notification title', body: 'description');},
+                              NotificationService().pushNotification( title: 'notification title', body: 'description');},
                            
                                        ),
                     ),

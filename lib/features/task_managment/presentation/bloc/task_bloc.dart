@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:goonline_app/features/notifications/service/notification_service.dart';
 import 'package:goonline_app/features/task_managment/data/models/task_model.dart';
 import 'package:goonline_app/features/task_managment/domain/usecases/add_task_usecase.dart';
 import 'package:goonline_app/features/task_managment/domain/usecases/edit_task_usecase.dart';
@@ -16,12 +17,14 @@ class TaskBloc extends Bloc<TaskEvent, TaskState> {
   final EditTaskUsecase editTaskUsecase;
   final LoadTaskUsecase loadTaskUsecase;
   final RemoveTaskUsecase removeTaskUsecase;
+  final NotificationService notificationService;
 
   TaskBloc(
     this.addTaskUsecase,
     this.editTaskUsecase,
     this.loadTaskUsecase,
     this.removeTaskUsecase,
+    this.notificationService,
   ) : super(const TaskInitState()) {
     on<LoadTaskEvent>(_loadTask);
     on<AddTaskEvent>(_addTask);
@@ -34,8 +37,15 @@ class TaskBloc extends Bloc<TaskEvent, TaskState> {
   FutureOr<void> _loadTask(LoadTaskEvent event, Emitter<TaskState> emit) async {
     emit(const TaskLoadingState());
     final result = await loadTaskUsecase.call();
-    result.fold((left) => emit(TaskFailedState(left.toString())),
-        (tasks) => emit(TaskLoadedState(tasks)));
+    result.fold((left) => emit(TaskFailedState(left.toString())), (tasks) {
+      for (var task in tasks) {
+        if (task.deadline < 1713132000000) {
+          notificationService.pushNotification(title: 'Hurry up!', body: task.taskName);
+        }
+      }
+
+      emit(TaskLoadedState(tasks));
+    });
   }
 
   FutureOr<void> _addTask(AddTaskEvent event, Emitter<TaskState> emit) async {
@@ -80,31 +90,27 @@ class TaskBloc extends Bloc<TaskEvent, TaskState> {
   }
 
   FutureOr<void> _sortBy(SortTaskEvent event, Emitter<TaskState> emit) {
+    emit(const TaskLoadingState());
 
-          emit(const TaskLoadingState());
-      
+    List<TaskModel> sorted = event.listToSort;
 
-       List<TaskModel> sorted = event.listToSort;
-
-        switch(event.sortBy){
-        case 'deadline' : 
-        sorted.sort((a, b) => a.deadline.compareTo(b.deadline)); 
+    switch (event.sortBy) {
+      case 'deadline':
+        sorted.sort((a, b) => a.deadline.compareTo(b.deadline));
         break;
-        case 'owner' :
+      case 'owner':
         sorted.sort(((a, b) => a.owner.compareTo(b.owner)));
         break;
-        case 'prio' :
+      case 'prio':
         sorted.sort((a, b) => a.prio.compareTo(b.prio));
         break;
-        default : break;
-      }
-      if(!event.lowToHgh){
-        sorted = sorted.reversed.toList();
-      }
-     
-      
-      emit(TaskLoadedState(sorted));
+      default:
+        break;
+    }
+    if (!event.lowToHgh) {
+      sorted = sorted.reversed.toList();
     }
 
-  
+    emit(TaskLoadedState(sorted));
+  }
 }

@@ -22,37 +22,17 @@ class PlannedScreen extends StatefulWidget {
 
 class _PlannedScreenState extends State<PlannedScreen> {
   @override
-
-
   String sortKey = "id";
 
   bool value = false;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: BlocBuilder<TaskBloc, TaskState>(
-        builder: (context, state) {
-          if (state is TaskLoadedState) {
-            return Column(
-              children: [
-                appbarWidget(context, widget.title, AppColors.blue),
-                listOfTasks(context),
-                FloatingActionButton(
-                  onPressed: () {
-                    showModalBottomSheet(
-                        context: context,
-                        builder: (context) {
-                          return sortDialog(context);
-                        });
-                  },
-                ),
-              ],
-            );
-          }else if (state is TaskInitState){
-            context.read<TaskBloc>().add(const LoadTaskEvent());
-          }
-          return const SizedBox();
-        },
+      body: Column(
+        children: [
+          appbarWidget(context, widget.title, AppColors.blue),
+          listOfTasks(context),
+        ],
       ),
       drawer: drawer(context),
     );
@@ -91,7 +71,7 @@ class _PlannedScreenState extends State<PlannedScreen> {
                           index + 1,
                           list[index].taskName,
                           list[index].owner,
-                          intToDate(list[index].deadline), 
+                          intToDate(list[index].deadline),
                           list[index].taskDescription,
                           intToPrio(
                             list[index].prio,
@@ -158,7 +138,6 @@ class _PlannedScreenState extends State<PlannedScreen> {
                             setModalState(() {
                               value = newValue;
                               print(value);
-                         
                             });
                           })
                     ],
@@ -229,3 +208,12 @@ class _PlannedScreenState extends State<PlannedScreen> {
     });
   }
 }
+              // FloatingActionButton(
+              //         onPressed: () {
+              //           showModalBottomSheet(
+              //               context: context,
+              //               builder: (context) {
+              //                 return sortDialog(context);
+              //               });
+              //         },
+              //       ),

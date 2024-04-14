@@ -1,4 +1,5 @@
 import 'package:get_it/get_it.dart';
+import 'package:goonline_app/features/notifications/service/notification_service.dart';
 import 'package:goonline_app/features/task_managment/data/datasource/task_datasource.dart';
 import 'package:goonline_app/features/task_managment/data/repository/task_repository.dart';
 import 'package:goonline_app/features/task_managment/domain/usecases/add_task_usecase.dart';
@@ -25,4 +26,6 @@ void setupLocators() {
   locator.registerSingleton<LoadTaskUsecase>(LoadTaskUsecase(taskRepository: locator()));
   locator.registerSingleton<RemoveTaskUsecase>(RemoveTaskUsecase(taskRepository: locator()));
   locator.registerSingleton<WeatherUsecase>(WeatherUsecase(repository: locator()));
+  locator.registerSingleton<NotificationService>(NotificationService());
+
 }

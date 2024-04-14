@@ -1,12 +1,11 @@
 
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 
-class NotificationDatasource{
-  static final FlutterLocalNotificationsPlugin notificationsPlugin = 
+class NotificationService{
+  final FlutterLocalNotificationsPlugin notificationsPlugin = 
    FlutterLocalNotificationsPlugin();
 
-
-  static notificationInit() async {
+  Future <void> notificationInit() async {
       await notificationsPlugin.resolvePlatformSpecificImplementation<AndroidFlutterLocalNotificationsPlugin>()?.requestNotificationsPermission();
       notificationsPlugin.initialize(
         const InitializationSettings(
@@ -18,7 +17,7 @@ class NotificationDatasource{
   
    }
 
-   static pushNotification ({required String title, required String body}) async {
+   Future<void> pushNotification ({required String title, required String body}) async {
 
     var androidDetails = const AndroidNotificationDetails(
       'example_channel', 

@@ -84,6 +84,7 @@ Widget listOfTasks(BuildContext context) {
               Center(
                 child: Text("Waiting for data"),
               ),
+              SizedBox(height: 15,),
               Center(child: CircularProgressIndicator())
             ],
           );
