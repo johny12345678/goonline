@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:goonline_app/features/shared/widgets/drawer_widget.dart';
+import 'package:goonline_app/shared/widgets/drawer_widget.dart';
 import 'package:goonline_app/features/task_managment/presentation/widgets/appbar_widget.dart';
 import 'package:goonline_app/themes/colors.dart';
 import 'package:goonline_app/themes/paddings.dart';
